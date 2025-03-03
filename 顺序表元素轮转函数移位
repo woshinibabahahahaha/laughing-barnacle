@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define maxnumber 10 
+//认为以顺式存储结构进行存储
+typedef struct {
+int maxnumber; 
+int len; 
+int element[maxnumber]; 
+}elem;
+void turnright (int k, elem array) 
+{
+    if (k<0) 
+    {  
+        printf("The number of step is not available!"): 
+        return 1; 
+    }
+k=k % len; 
+while (k>0)//元素向右轮转k次
+{
+    int m= array. element[len - 1]; 
+    for (int i=len - 1; i> 0; i--) 
+    {
+        array.element [i] = array. element[i-1]; 
+    }
+    array.element [0] =m;
+    k-= 1; 
+}
+printf("轮转后的数组:n");//输出轮转后的数组
+for (int i=O;i< array.len; i++)
+{
+    printf("%d", array.element[i]);
+    free(array);//释放内存
+}
+int main()
+{
+    int k, len, maxnumber; 
+    elem* array=(elem*)malloc(sizeof(elem));//为elem类型变量分配空间
+    if (array= NULL) 
+    {
+        printf("内存分配失败n"); 
+        return 1; 
+    }
+    printf("请输入一个正整数:\n");//获取元素个数
+    scanf("%d", &len); 
+    if (len <0) 
+    {
+        printf("The length of the element is not available!"); 
+        return 1; 
+    } 
+    printf("请输入一个正整数:\n"); 
+    scanf("%d",&k);//获取向右轮转步数
+    printf("请输入%d个0-9的整数:\n",len);// array.element[]赋值
+    for (int i=0;i<len; i++) 
+    { 
+        scanf_s("%d", &array.element [i]);
+    }
+    turnright (k, array);
+    return 0;
+}
