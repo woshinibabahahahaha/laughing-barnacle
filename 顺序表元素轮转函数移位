@@ -1,58 +1,68 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define maxnumber 10 
+#define MAXNUMBER 10
 //认为以顺式存储结构进行存储
 typedef struct {
-int maxnumber;
-int len; 
-int element[maxnumber]; 
-}elem;
+    int maxnumber;
+    int len;
+    int element[MAXNUMBER];
+} elem;
 void turnright (int k, elem array) 
 {
-    if (k<0) 
-    {  
-        printf("The number of step is not available!"): 
-        return; 
-    }
-    k=k % array.len; 
-    while (k>0)//元素向右轮转k次
+    if (k < 0) 
     {
-        int m= array. element[len - 1]; 
+        printf("The number of steps is not valid!\n");
+        return;
+    }
+    int len = array->len;
+    k = k % len; 
+    if (k == 0)
+    {
+        for (int i=0;i< len; i++)
+        {
+            printf("%d", array->element[i]);
+        } 
+    }
+    while (k>0)//元素向右轮转k次,此处也可以一步到位for循环array->element[i] = array->element[i - k];array->element[len - k] = m;时间复杂度仅为O（len)
+    {
+        int m= array->element[len - 1]; 
         for (int i=len - 1; i> 0; i--) 
             {
-                array.element [i] = array. element[i-1]; 
+                array->element [i] = array->element[i-1]; 
             }
-        array.element [0] =m;
+        array->element [0] =m;
         k-= 1; 
     }
-    printf("轮转后的数组:n");//输出轮转后的数组
-    for (int i=O;i< array.len; i++)
+    printf("轮转后的数组:\n");//输出轮转后的数组
+    for (int i=O;i< len; i++)
     {
-        printf("%d", array.element[i]);
+        printf("%d", array->element[i]);
     }
 }
 int main()
 {
-    int k, len, maxnumber; 
+    int k, len; 
     elem* array=(elem*)malloc(sizeof(elem));//为elem类型变量分配空间
     if (array= NULL) 
     {
         printf("内存分配失败\n"); 
         return 1; 
     }
-    printf("请输入一个正整数:\n");//获取元素个数
-    scanf("%d", &array.len); 
-    if (array.len <0) 
+    array->maxnumber=MAXNUMBER;
+    printf("请输入一个正整数（元素个数）:\n");//获取元素个数
+    scanf("%d", &len); 
+    array->len=len;
+    if (len <0) 
     {
-        printf("The length of the element is not available!"); 
+        printf("The length of the element is not available!\n"); 
         return 1; 
     } 
-    printf("请输入一个正整数:\n"); 
+    printf("请输入一个正整数(轮转步数）:\n"); 
     scanf("%d",&k);//获取向右轮转步数
-    printf("请输入%d个0-9的整数:\n",array.len);// array.element[]赋值
-    for (int i=0;i<array.len; i++) 
+    printf("请输入%d个0-9的整数:\n",len);// array->element[]赋值
+    for (int i=0;i<len; i++) 
     { 
-        scanf("%d", &array.element [i]);
+        scanf("%d", &array->element [i]);
     }
     turnright (k, array);
     free(array);//释放内存
