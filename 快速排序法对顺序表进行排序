@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAXnuber 30
+typedef struct
+{
+	int number;
+	char name[MAXnuber];
+	int chore;
+}studentinformation;
+typedef struct
+{
+	int maxnumber;
+	int len;
+	studentinformation* element;
+}studentform;
+int partition(studentinformation arr[], int low, int high) 
+{
+	studentinformation pivot = arr[high]; // 选择最后一个元素作为枢轴
+	int i = (low - 1); // i是较小元素的索引
+
+	for (int j = low; j <= high - 1; j++)
+	{
+		// 如果当前元素小于或等于枢轴
+		if (arr[j].chore <= pivot.chore)
+		{
+			i++; // 增加较小元素的索引
+			// 交换arr[i]和arr[j]
+			studentinformation temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
+		}
+	}
+	// 交换arr[i + 1]和arr[high] (或枢轴)
+	studentinformation temp = arr[i + 1];
+	arr[i + 1] = arr[high];
+	arr[high] = temp;
+	return (i + 1);
+}
+// 快速排序函数
+void quickSort(studentinformation arr[], int low, int high)
+{
+	if (low < high)
+	{
+		// pi是分区索引，arr[pi]已经排序
+		int pi = partition(arr, low, high);
+
+		// 分别对分区前后的子数组进行排序
+		quickSort(arr, low, pi - 1);
+		quickSort(arr, pi + 1, high);
+	}
+}
+int main()
+{
+	studentform* a=(studentform*)malloc(sizeof(studentform));
+	if (a == NULL) 
+	{
+		fprintf(stderr, "Memory allocation failed\n");
+		return 1;
+	}
+	int len;
+	printf("请输入一个整数(元素个数):\n");
+	scanf_s("%d", &len);
+	a->len = len;
+	a->element = (studentinformation*)malloc(len * sizeof(studentinformation));
+	if (a->element == NULL) 
+	{
+		fprintf(stderr, "Memory allocation failed\n");
+		free(a);
+		return 1;
+	}
+	for (int i = 0; i < len; i++)
+	{
+		printf("请输入学生姓名:\n");
+		scanf_s("%29s", &a->element[i].name, (unsigned)_countof(a->element[i].name));
+		printf("请输入学生学号:\n");
+		scanf_s("%d", &a->element[i].number);
+		printf("请输入学生成绩:\n");
+		scanf_s("%d", &a->element[i].chore);
+	}
+	quickSort(a->element, 0, len - 1);
+	for (int u = len - 1; u >= 0; u--)
+	{
+		printf("%d %s %d\n", a->element[u].number,a->element[u].name,a->element[u].chore);
+	}
+	free(a->element);
+	free(a);
+	return 0;
+}
